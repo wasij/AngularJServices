@@ -3,9 +3,9 @@
 (function () {
 
     angular.module('app')
-           .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', BooksController]);
+           .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', '$log', '$route', BooksController]);
 
-    function BooksController(books, dataService, logger, badgeService, $q) {
+    function BooksController(books, dataService, logger, badgeService, $q, $log, $route) {
 
         var vm = this;
 

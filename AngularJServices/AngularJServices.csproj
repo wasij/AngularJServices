@@ -119,6 +119,7 @@
     <Content Include="scripts\app.js" />
     <Content Include="books\BookController.js" />
     <Content Include="services\badgeService.js" />
+    <Content Include="services\bookLoggerInterceptor.js" />
     <Content Include="services\constantService.js" />
     <Content Include="services\dataService.js" />
     <Content Include="services\loggerService.js" />

@@ -90,10 +90,23 @@
                 url: 'BookService.asmx/GetAllBooks',
                 headers: {
                     'PS-BookLogger-Version': constants.APP_VERSION
-                }
+                },
+                transformResponse: transformGetBooks
             })
             .then(sendResponseData)
             .catch(sendGetBooksError);            
+        }
+
+        function transformGetBooks(data, headersGetter) {
+
+            var transformed = angular.fromJson(data);
+
+            transformed.forEach(function (currentValue, index, array) {
+                currentValue.dateDownloaded = new Date();
+            });
+
+            console.log(transformed);
+            return transformed;
         }
 
         function sendResponseData(response) {
@@ -105,9 +118,12 @@
         }
 
         function getBookByID(bookID) {
-            return $http({
-                method: 'GET',
-                url: 'BookService.asmx/GetBookByID',
+            //return $http({
+            //    method: 'GET',
+            //    url: 'BookService.asmx/GetBookByID',
+            //    params: { bookID: bookID }
+            //})
+            return $http.get('BookService.asmx/GetBookByID', {
                 params: { bookID: bookID }
             })
             .then(sendResponseData)
@@ -133,13 +149,24 @@
         }
 
         function addBook(newBook) {
-            return $http({
-                method: 'POST',
-                url: 'BookService.asmx/AddBook',
-                data: JSON.stringify({ "newBook": newBook })
-            })
-            .then(addBookSuccess)
-            .catch(addBookError);
+            //return $http({
+            //    method: 'POST',
+            //    url: 'BookService.asmx/AddBook',
+            //    data: JSON.stringify({ "newBook": newBook })
+            //})
+            return $http.post('BookService.asmx/AddBook', newBook, {
+                        transformRequest: transformPostRequest
+                    })
+                    .then(addBookSuccess)
+                    .catch(addBookError);
+        }
+
+        function transformPostRequest(data, headersGetter) {
+            data.newBook = true;
+
+            console.log(data);
+
+            return JSON.stringify({ "newBook": data });
         }
 
         function addBookSuccess(response) {
@@ -150,11 +177,11 @@
             return $q.reject('Error adding book. (HTTP status: ' + response.status + ')');
         }
 
-        function deleteBook(book) {
+        function deleteBook(bookID) {
             return $http({
                 method: 'POST',
                 url: 'BookService.asmx/DeleteBook',
-                data: JSON.stringify({ "bookID": book.book_id })
+                data: JSON.stringify({ "bookID": bookID })
             })
             .then(deleteBookSuccess)
             .catch(deleteBookError);
