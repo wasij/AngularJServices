@@ -1,0 +1,24 @@
+﻿<h3>Edit Book</h3>
+
+<form>
+    <div>
+        <label>Title</label>
+        <div>
+            <input ng-model="bookEditor.currentBook.title" type="text" id="booktitle" placeholder="Title" />
+        </div>
+    </div>
+    <div>
+        <label>Author</label>
+        <div>
+            <input ng-model="bookEditor.currentBook.author" type="text" id="bookauthor" placeholder="Author" />
+        </div>
+    </div>
+    <div>
+        <label>Year</label>
+        <div>
+            <input ng-model="bookEditor.currentBook.year_published" type="text" id="bookpublished" placeholder="Year Published" />
+        </div>
+    </div>
+    <br />
+    <button ng-click="bookEditor.saveBook()">Save</button>
+</form>
