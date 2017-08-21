@@ -28,9 +28,13 @@
         };
     }]);
 
-    app.config(['booksProvider', 'constants', '$routeProvider', '$locationProvider',
-        function (booksProvider, constants, $routeProvider, $locationProvider) {
+    app.config(['booksProvider', 'constants', '$routeProvider', '$logProvider', '$locationProvider', '$httpProvider',
+        function (booksProvider, constants, $routeProvider, $logProvider, $locationProvider, $httpProvider) {
             booksProvider.setIncludeVersionInTitle(true);
+            $logProvider.debugEnabled(true);
+
+            $httpProvider.interceptors.push('bookLoggerInterceptor');
+
             //console.log('title from constants service: ' + constants.APP_TITLE);
             $routeProvider.caseInsensitiveMatch = true;
             $routeProvider

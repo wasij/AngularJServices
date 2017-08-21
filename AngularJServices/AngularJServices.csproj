@@ -121,6 +121,7 @@
     <Content Include="services\badgeService.js" />
     <Content Include="services\bookLoggerInterceptor.js" />
     <Content Include="services\constantService.js" />
+    <Content Include="services\currentUser.js" />
     <Content Include="services\dataService.js" />
     <Content Include="services\loggerService.js" />
     <Content Include="templates\addBook.html" />
