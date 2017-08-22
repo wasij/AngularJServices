@@ -3,9 +3,9 @@
 (function () {
 
     angular.module('app')
-        .controller('EditBookController', ['$routeParams', 'dataService', '$log', '$location', EditBookController]);
+        .controller('EditBookController', ['$routeParams', 'dataService', '$log', '$location', 'currentUser', EditBookController]);
 
-    function EditBookController($routeParams, dataService, $log, $location) {
+    function EditBookController($routeParams, dataService, $log, $location, currentUser) {
 
         var vm = this;
 
@@ -15,6 +15,7 @@
 
         function getBookSuccess(book) {
             vm.currentBook = book;
+            currentUser.lastBookEdited = vm.currentBook;
         }
 
         function getBookError(reason) {

@@ -3,9 +3,9 @@
 (function () {
 
     angular.module('app')
-           .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', '$log', '$route', BooksController]);
+           .controller('BooksController', ['books', 'dataService', 'logger', 'badgeService', '$q', '$log', '$route', 'currentUser', BooksController]);
 
-    function BooksController(books, dataService, logger, badgeService, $q, $log, $route) {
+    function BooksController(books, dataService, logger, badgeService, $q, $log, $route, currentUser) {
 
         var vm = this;
 
@@ -60,6 +60,7 @@
 
         function getReadersSuccess(readers) {
             vm.allReaders = readers;
+            $log.awesome('All readers retrieved');
         }
 
         function getAllReadersComplete() {
@@ -83,6 +84,8 @@
         }
 
         vm.getBadge = badgeService.retrieveBadge;
+
+        vm.currentUser = currentUser;
 
         //logger.output('BooksController has been created.');        
     }

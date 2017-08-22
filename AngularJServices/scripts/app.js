@@ -28,8 +28,11 @@
         };
     }]);
 
-    app.config(['booksProvider', 'constants', '$routeProvider', '$logProvider', '$locationProvider', '$httpProvider',
-        function (booksProvider, constants, $routeProvider, $logProvider, $locationProvider, $httpProvider) {
+    app.config(['booksProvider', 'constants', '$routeProvider', '$logProvider', '$locationProvider', '$httpProvider', '$provide',
+        function (booksProvider, constants, $routeProvider, $logProvider, $locationProvider, $httpProvider, $provide) {
+
+            $provide.decorator('$log', ['$delegate', 'books', logDecorator]);
+
             booksProvider.setIncludeVersionInTitle(true);
             $logProvider.debugEnabled(true);
 
@@ -55,8 +58,46 @@
                 })
                 .otherwise('/');
 
-            $locationProvider.html5Mode(true);
+            $locationProvider.html5Mode(true);            
         }]);
+
+    function logDecorator($delegate, books) {
+
+        function log(message) {
+            message += ' - ' + new Date() + ' (' + books.appName + ')';
+            $delegate.log(message);
+        }
+
+        function info(message) {
+            $delegate.info(message);
+        }
+
+        function warn(message) {
+            $delegate.warn(message);
+        }
+
+        function error(message) {
+            $delegate.error(message);
+        }
+
+        function debug(message) {
+            $delegate.debug(message);
+        }
+
+        function awesome(message) {
+            message = 'Awesome!!! - ' + message;
+            $delegate.log(message);
+        }
+
+        return {
+            log: log,
+            info: info,
+            warn: warn,
+            error: error,
+            debug: debug,
+            awesome: awesome
+        };
+    }
 
     app.run(['$rootScope', function ($rootScope) {
 
