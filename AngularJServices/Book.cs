@@ -5,6 +5,7 @@ using System.Web;
 
 namespace AngularJServices
 {
+    //Book Class
     public class Book
     {
         public int book_id { get; set; }
